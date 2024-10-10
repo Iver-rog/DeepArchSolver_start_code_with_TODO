@@ -22,7 +22,6 @@ def rot_matrix(theta):
 
 def beam2local_def_disp(ex,ey, disp_global):
     """
-
     :param ex: element x coordinate [x1, x2] in undeformed position
     :param ey: element y coordinate [y1, y2] in undeformed position
     :param disp_global:  displacement vector [u1, v1, r1, u2, v2, r2] in global directions
@@ -31,7 +30,15 @@ def beam2local_def_disp(ex,ey, disp_global):
     eVec12 = np.array([ex[1] - ex[0], ey[1] - ey[0]])
     L0 = math.sqrt(eVec12 @ eVec12)
 
-    Ld = L0 #TODO:  correct this
+    disp__coordinates = np.array()
+    exn = np.array([ex[1]+disp_global[3] - ex[0]+disp_global[0],
+                    ey[1]+disp_global[4] - ey[0]+disp_global[1]])
+
+    Ld = math.sqrt(exn @ exn)
+    eyn = np.array[ -exn[1],
+                     exn[0] ]
+    exn /= L0
+    eyn /= L0
 
     # TODO: Quite a bit here
 
